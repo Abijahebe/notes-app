@@ -1,0 +1,77 @@
+def menu():
+    print("Note App Menu")
+    print("1. View all notes")
+    print("2. Add a note")
+    print("3. Edit a note")
+    print("4. Delete a note")
+    print("5. Exit")
+
+
+def view_notes():
+    with open("notes.txt", "r") as f:
+        notes = f.readlines()
+    if notes:
+        for note in notes:
+            print(note.strip())
+    else:
+        print("No notes found.")
+
+
+def add_note():
+    note = input("Enter your note: ")
+    with open("notes.txt", "a") as f:
+        f.write(note+"\n")
+    print("Note added.")
+
+
+def edit_note():
+    with open("notes.txt", "r") as f:
+        notes = f.readlines()
+    if notes:
+        for i, note in enumerate(notes):
+            print(f"{i}: {note.strip()}")
+        idx = int(input("Enter the index of the note you would like to edit: "))
+        new_note = input("Enter the new note: ")
+        notes[idx] = new_note+"\n"
+        with open("notes.txt", "w") as f:
+            f.writelines(notes)
+        print("Note edited.")
+    else:
+        print("No notes found.")
+
+
+def delete_note():
+    with open("notes.txt", "r") as f:
+        notes = f.readlines()
+    if notes:
+        for i, note in enumerate(notes):
+            print(f"{i}: {note.strip()}")
+        idx = int(input("Enter the index of the note you would like to delete: "))
+        del notes[idx]
+        with open("notes.txt", "w") as f:
+            f.writelines(notes)
+        print("Note deleted.")
+    else:
+        print("No notes found.")
+
+
+
+def main():
+    while True:
+        menu()
+        choice = input("Enter your choice: ")
+        if choice == "1":
+            view_notes()
+        elif choice == "2":
+            add_note()
+        elif choice == "3":
+            edit_note()
+        elif choice == "4":
+            delete_note()
+        elif choice == "5":
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
